@@ -1,9 +1,11 @@
-import React from 'react'
+import InterviewAssistant from "./components/InterviewAssistant";
 
-const App = () => {
+function App() {
   return (
-    <div>App</div>
-  )
+    <div className="p-5">
+      <InterviewAssistant />
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -13,10 +13,10 @@
     "@tailwindcss/vite": "^4.0.9",
     "axios": "^1.8.1",
     "dotenv": "^16.4.7",
-    "framer-motion": "^12.4.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-speech-recognition": "^3.10.0",
+    "react-syntax-highlighter": "^15.6.1",
     "regenerator-runtime": "^0.14.1",
     "tailwindcss": "^4.0.9"
   },
