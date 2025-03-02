@@ -4,7 +4,7 @@ const InputControls = ({ input, setInput, toggleListening, handleAIResponse, isR
       const value = e.target.value;
       setInput(value);
       
-      // Kapag walang laman ang input field, i-reset ang transcript
+     
       if (!value.trim()) {
         resetTranscript();
       }
@@ -24,7 +24,7 @@ const InputControls = ({ input, setInput, toggleListening, handleAIResponse, isR
           className="flex-1 p-2 border rounded"
           placeholder="Type a message..."
           value={input}
-          onChange={handleInputChange} // Ginamit na natin dito
+          onChange={handleInputChange} 
           onKeyDown={(e) => e.key === "Enter" && handleAIResponse(input)}
         />
         

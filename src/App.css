@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Enhanced Toggle Switch */
+
 .switch {
   position: relative;
   display: inline-flex;
@@ -22,7 +22,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #d1d5db; /* Tailwind gray-300 */
+  background-color: #d1d5db;
   transition: background-color 0.3s ease-in-out;
   border-radius: 9999px;
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
@@ -43,7 +43,7 @@
 
 /* Active State */
 input:checked + .slider {
-  background-color: #10b981; /* Tailwind emerald-500 */
+  background-color: #10b981; 
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 

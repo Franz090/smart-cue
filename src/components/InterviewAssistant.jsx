@@ -42,9 +42,9 @@ const InterviewAssistant = () => {
     if (isRecording) {
       setIsRecording(false);
       SpeechRecognition.stopListening();
-      if (input.trim()) handleAIResponse(input); // Ginamit ang input imbes na transcript
+      if (input.trim()) handleAIResponse(input);
       resetTranscript();
-      setInput(""); // Clear input after stopping
+      setInput(""); 
     } else {
       resetTranscript();
       setIsRecording(true);
