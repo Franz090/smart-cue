@@ -91,15 +91,14 @@ const InterviewAssistant = () => {
           <span className={`${language === "tagalog" ? "text-blue-500" : "text-gray-500"} text-sm`}>Tagalog</span>
         </div>
       </div>
+      <div className="flex-1 p-5 space-y-3 pt-16 pb-20 overflow-y-auto">
+  {messages.map((msg, index) => (
+    <Message key={index} msg={msg} />
+  ))}
+  {loading && <Spinner />}
+  <div ref={messagesEndRef} />
+</div>
 
-      <div className="flex-1 p-5 space-y-3 mt-12 pb-5 overflow-y">
-
-        {messages.map((msg, index) => (
-          <Message key={index} msg={msg} />
-        ))}
-        {loading && <Spinner />}
-        <div ref={messagesEndRef} />
-      </div>
 
       <InputControls
   input={input}
