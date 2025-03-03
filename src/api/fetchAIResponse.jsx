@@ -4,10 +4,8 @@ export const fetchAIResponse = async (query, mode, language) => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-  
   const correctedQuery = await correctTextWithAI(query, apiKey, apiUrl);
 
-  
   let modePrompt = "";
   if (mode === "explanation") {
     modePrompt = language === "english"
@@ -17,6 +15,10 @@ export const fetchAIResponse = async (query, mode, language) => {
     modePrompt = language === "english"
       ? "Provide a detailed, in-depth response explaining the topic thoroughly."
       : "Magbigay ng detalyadong, malalim na sagot na ipinaliwanag nang lubos ang paksa.";
+  } else if (mode === "web-development") { 
+    modePrompt = language === "english"
+      ? "You are a web development expert. Answer as if you're in a web development technical interview. Provide industry-standard answers with best practices."
+      : "Ikaw ay isang eksperto sa web development. Sagutin ito na parang nasa isang teknikal na interview sa web development.";
   }
 
   try {
@@ -36,6 +38,7 @@ export const fetchAIResponse = async (query, mode, language) => {
 };
 
 
+
 const detectLanguage = (text) => {
   const englishWords = text.match(/[a-zA-Z]+/g)?.length || 0;
   const tagalogWords = text.match(/[a-zA-Z]*[aeiouAEIOU]{2,}[a-zA-Z]*/g)?.length || 0;
@@ -49,7 +52,7 @@ const detectLanguage = (text) => {
   }
 };
 
-const correctTextWithAI = async (text, apiUrl) => {
+const correctTextWithAI = async (text, apiKey, apiUrl) => {
   const language = detectLanguage(text);
 
   if (language === "taglish" || language === "tagalog") {
@@ -57,8 +60,8 @@ const correctTextWithAI = async (text, apiUrl) => {
   }
 
   try {
-    const correctionPrompt = `Correct any spelling or grammar mistakes in this English text: "${text}". Keep it natural and concise.`;
-    
+    const correctionPrompt = `Correct spelling or grammar mistakes in this English text while preserving web development terminology: "${text}". Ensure technical terms remain unchanged.`;
+
     const { data } = await axios.post(
       apiUrl,
       {

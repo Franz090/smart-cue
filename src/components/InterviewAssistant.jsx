@@ -42,13 +42,22 @@ const InterviewAssistant = () => {
     if (isRecording) {
       setIsRecording(false);
       SpeechRecognition.stopListening();
-      if (transcript.trim()) handleAIResponse(transcript); // Directly use transcript
+      let processedTranscript = transcript
+        .replace(/js/gi, "JavaScript")  
+        .replace(/css/gi, "CSS")       
+        .replace(/html/gi, "HTML")     
+        .replace(/reactjs/gi, "React.js")  
+        .replace(/php/gi, "PHP")
+        .replace(/nodejs/gi, "Node.js");    
+    
+      if (processedTranscript.trim()) handleAIResponse(processedTranscript);
       resetTranscript();
     } else {
       resetTranscript();
       setIsRecording(true);
       SpeechRecognition.startListening({ continuous: true, interimResults: false });
     }
+    
   };
   useEffect(() => {
     setTimeout(() => {
@@ -80,7 +89,7 @@ const InterviewAssistant = () => {
   return (
     <div className="flex flex-1 flex-col h-screen">
       <div className="p-3 bg-white shadow-md flex justify-start space-x-3 fixed top-0 left-0 right-0 border-b">
-        <ModeToggle mode={mode} setMode={setMode} />
+        <ModeToggle mode={mode} setMode={setMode} options={["explanation", "detailed", "web-development"]} />
         <div className="flex items-center space-x-2">
         <span className={`text-sm ${language === "english" ? "text-blue-500 font-bold" : "text-gray-500"}`}>English</span>
 
