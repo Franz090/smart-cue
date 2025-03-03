@@ -42,15 +42,20 @@ const InterviewAssistant = () => {
     if (isRecording) {
       setIsRecording(false);
       SpeechRecognition.stopListening();
-      if (input.trim()) handleAIResponse(input);
+      if (transcript.trim()) handleAIResponse(transcript); // Directly use transcript
       resetTranscript();
-      setInput(""); 
     } else {
       resetTranscript();
       setIsRecording(true);
       SpeechRecognition.startListening({ continuous: true, interimResults: false });
     }
   };
+  useEffect(() => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100); // May delay para sigurado gumana
+  }, [messages]);
+  
   
 
   const handleAIResponse = async (query) => {
@@ -73,12 +78,12 @@ const InterviewAssistant = () => {
  
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-1 flex-col h-screen">
       <div className="p-3 bg-white shadow-md flex justify-start space-x-3 fixed top-0 left-0 right-0 border-b">
-
         <ModeToggle mode={mode} setMode={setMode} />
         <div className="flex items-center space-x-2">
-          <span className={`${language === "english" ? "text-blue-500" : "text-gray-500"} text-sm`}>English</span>
+        <span className={`text-sm ${language === "english" ? "text-blue-500 font-bold" : "text-gray-500"}`}>English</span>
+
           <label className="switch">
             <input type="checkbox" checked={language === "english"} onChange={() => setLanguage(language === "english" ? "tagalog" : "english")} />
             <span className="slider"></span>
@@ -87,7 +92,8 @@ const InterviewAssistant = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-5 space-y-3 mt-12" style={{ paddingBottom: "5rem" }}>
+      <div className="flex-1 p-5 space-y-3 mt-12 pb-5 overflow-y">
+
         {messages.map((msg, index) => (
           <Message key={index} msg={msg} />
         ))}
