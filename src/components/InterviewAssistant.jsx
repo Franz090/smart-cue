@@ -19,9 +19,7 @@ const InterviewAssistant = () => {
 
   useEffect(() => {
     const savedMode = localStorage.getItem("interviewMode");
-    if (savedMode) {
-      setMode(savedMode);
-    }
+    if (savedMode) setMode(savedMode);
   }, []);
 
   useEffect(() => {
@@ -29,9 +27,7 @@ const InterviewAssistant = () => {
   }, [mode]);
 
   useEffect(() => {
-    if (isRecording) {
-      setInput(transcript);
-    }
+    if (isRecording) setInput(transcript);
   }, [transcript, isRecording]);
 
   useEffect(() => {
@@ -43,13 +39,13 @@ const InterviewAssistant = () => {
       setIsRecording(false);
       SpeechRecognition.stopListening();
       let processedTranscript = transcript
-        .replace(/js/gi, "JavaScript")  
-        .replace(/css/gi, "CSS")       
-        .replace(/html/gi, "HTML")     
-        .replace(/reactjs/gi, "React.js")  
+        .replace(/js/gi, "JavaScript")
+        .replace(/css/gi, "CSS")
+        .replace(/html/gi, "HTML")
+        .replace(/reactjs/gi, "React.js")
         .replace(/php/gi, "PHP")
-        .replace(/nodejs/gi, "Node.js");    
-    
+        .replace(/nodejs/gi, "Node.js");
+
       if (processedTranscript.trim()) handleAIResponse(processedTranscript);
       resetTranscript();
     } else {
@@ -57,15 +53,7 @@ const InterviewAssistant = () => {
       setIsRecording(true);
       SpeechRecognition.startListening({ continuous: true, interimResults: false });
     }
-    
   };
-  useEffect(() => {
-    setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100); // May delay para sigurado gumana
-  }, [messages]);
-  
-  
 
   const handleAIResponse = async (query) => {
     if (!query.trim()) return;
@@ -84,40 +72,38 @@ const InterviewAssistant = () => {
     }
   };
 
- 
-
   return (
     <div className="flex flex-1 flex-col h-screen">
       <div className="p-3 bg-white shadow-md flex justify-start space-x-3 fixed top-0 left-0 right-0 border-b">
         <ModeToggle mode={mode} setMode={setMode} options={["explanation", "detailed", "web-development"]} />
         <div className="flex items-center space-x-2">
-        <span className={`text-sm ${language === "english" ? "text-blue-500 font-bold" : "text-gray-500"}`}>English</span>
-
+          <span className={`text-sm ${language === "english" ? "text-blue-500 font-bold" : "text-gray-500"}`}>
+            English
+          </span>
           <label className="switch">
             <input type="checkbox" checked={language === "english"} onChange={() => setLanguage(language === "english" ? "tagalog" : "english")} />
             <span className="slider"></span>
           </label>
-          <span className={`${language === "tagalog" ? "text-blue-500" : "text-gray-500"} text-sm`}>Tagalog</span>
+          <span className={`text-sm ${language === "tagalog" ? "text-blue-500" : "text-gray-500"}`}>
+            Tagalog
+          </span>
         </div>
       </div>
       <div className="flex-1 p-5 space-y-3 pt-16 pb-20 overflow-y-auto">
-  {messages.map((msg, index) => (
-    <Message key={index} msg={msg} />
-  ))}
-  {loading && <Spinner />}
-  <div ref={messagesEndRef} />
-</div>
-
-
+        {messages.map((msg, index) => (
+          <Message key={index} msg={msg} />
+        ))}
+        {loading && <Spinner />}
+        <div ref={messagesEndRef} />
+      </div>
       <InputControls
-  input={input}
-  setInput={setInput}
-  toggleListening={toggleListening}
-  handleAIResponse={handleAIResponse}
-  isRecording={isRecording}
-  resetTranscript={resetTranscript} // Ipasok ito
-/>
-
+        input={input}
+        setInput={setInput}
+        toggleListening={toggleListening}
+        handleAIResponse={handleAIResponse}
+        isRecording={isRecording}
+        resetTranscript={resetTranscript}
+      />
     </div>
   );
 };
